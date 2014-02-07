@@ -1,5 +1,7 @@
 ---
 layout: post
+title: Behind the Mirror
+tagline: C++ Reflection
 category : articles
 tags : [c++, c++ reflection]
 ---

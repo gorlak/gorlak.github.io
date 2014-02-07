@@ -1,5 +1,7 @@
 ---
 layout: post
+title: Code Organization Patterns
+tagline: Be Kind to Your Revision Control
 category : articles
 tags : [code organization]
 ---

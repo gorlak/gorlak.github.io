@@ -17,6 +17,9 @@ Hi! I am Geoff Evans, programmer at large (mostly gamedev, and usually gamedev t
   {% if post.title %}
       <a href="{{ root_url }}{{ post.url }}">{{ post.title }}</a>
   {% endif %}
+  {% if post.tagline %}
+  <br><small>{{post.tagline}}</small>
+  {% endif %}
   </h1>
   <div class="entry-content">{{ content }}</div>
 </div>

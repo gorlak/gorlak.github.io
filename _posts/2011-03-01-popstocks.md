@@ -1,5 +1,7 @@
 ---
 layout: post
+title: Popstocks
+tagline: Postmortem of a Facebook Game
 category : articles
 tags : [postmortem, facebook]
 ---
