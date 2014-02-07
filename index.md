@@ -21,6 +21,9 @@ Hi! I am Geoff Evans, programmer at large (mostly gamedev, and usually gamedev t
   <div class="entry-content">{{ content }}</div>
 </div>
 
+<hr>
+All posts:
+
 <ul class="posts">
   {% for post in site.posts %}
     <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
