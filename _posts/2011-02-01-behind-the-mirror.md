@@ -134,9 +134,9 @@ Class stores all of the information for a class of object in your code (client o
     struct Class
     {
         const Class*            m_Base;     // our base class
-        Array&lt; const Class* &gt;   m_Derived;  // our derived classes
+        Array< const Class* >;  m_Derived;  // our derived classes
         const char*             m_Name;     // our name (user-friendly)
-        Array&lt; const Field* &gt;   m_Fields;   // fields of this class
+        Array< const Field* >   m_Fields;   // fields of this class
         Class( const char* name )
             : m_Base( NULL )
             , m_Name( name )
@@ -151,7 +151,7 @@ Field stores information about a particular member variable in a class. Fields a
     struct Field
     {
         const Class*      m_OwnerClass;  // the class this is within
-    ￼    const Class*      m_DataClass;   // the class of data
+        const Class*      m_DataClass;   // the class of data
                                          //  that serializes the field
         const char*       m_Name;        // name of the field
         size_t            m_Size;        // the size of the field
@@ -172,7 +172,7 @@ Field stores information about a particular member variable in a class. Fields a
 
 To help populate the data model, some template functions can help extract useful data via template parameters:
 
-    template&lt; class ObjectT, class DataT &gt;
+    template< class ObjectT, class DataT >;
     Field* AddField( Class* owner, DataT T::* field, const char* name,
                      const Class* data = NULL )
     {
@@ -182,11 +182,11 @@ To help populate the data model, some template functions can help extract useful
         //  using the pointer to the member variable
         Field* field;
         field = new Field( owner,
-                           data ? data : DeduceDataClass&lt; DataT &gt;(),
+                           data ? data : DeduceDataClass< DataT >(),
                            name,
                            sizeof( DataT ),
                            GetFieldOffset( field ) );
-        owner-&gt;m_Fields.Push( field );
+        owner->m_Fields.Push( field );
         return field;
     }
 
@@ -206,12 +206,12 @@ int32_t Object::* pointer_to_member_variable = &amp;Object::m_Member;
 
 To compute the offset from a pointer to a member variable:
 
-    template&lt; class ObjectT, class DataT &gt;
+    template< class ObjectT, class DataT >
     uint32_t GetFieldOffset( ObjectT DataT::* field )
     {
         // a pointer-to-member is really just an
         //  offset value disguised by the compiler
-        return (uint32_t) (uintptr_t) &amp;( ((ObjectT*)NULL)-&gt;*field );
+        return (uint32_t) (uintptr_t) &( ((ObjectT*)NULL)->*field );
     }
 
 This function doesn't bother with allocating an instance to dereference the pointer to member variable. It substitutes a NULL pointer, dereferences the pointer to member variable, and uses the address operator to yield the offset (from NULL) at which the pointed member exists. Some of this syntax may seem strange if you haven't used it before; but it's a perfect fit for maximizing what information is needed to describe a field in a single function parameter.
@@ -220,7 +220,7 @@ This function doesn't bother with allocating an instance to dereference the poin
 
 DeduceDataClass is a good example of template deduction using explicit template specialization. This deduction technique is a way of using the C++ template mechanism to allow for the automatic selection of some information by the template compiler based only on a template parameter. The default template function's implementation returns NULL, indicating that the deduction failed since no specialization was found to find the associated data:
 
-    template&lt; class DataT &gt;
+    template< class DataT >;
     Class* DeduceDataClass()
     {
         // unknown data!
@@ -229,14 +229,14 @@ DeduceDataClass is a good example of template deduction using explicit template 
 
 Then create an explicit specialization for every type that can be deduced:
 
-    template&lt;&gt;
+    template<>;
     Class* DeduceDataClass()
     {
         // this specialization associates the uint32_t
         //  built in type with an object class that can
     ￼    //  process data of type uint32_t with respect
         //  to other persistence / cloning / mining code
-        return SimpleData&lt; uint32_t &gt;::s_Class;
+        return SimpleData< uint32_t >::s_Class;
     }
 
 In this case, a pointer is returned to the class reflection information for the type of data object to be used when dealing with the built-in type passed into the template argument.
@@ -245,7 +245,7 @@ In this case, a pointer is returned to the class reflection information for the 
 
 One more template will help keep the code that registers classes at startup concise:
 
-    template&lt; class ObjectT &gt;
+    template< class ObjectT >;
     static Class* CreateClass( const char* name )
     {
         Class* result = new Class( name );
@@ -263,25 +263,25 @@ Finally, an example class and main that will put all of this code to work:
     private:
         uint32_t m_Number;
     public:
-        static Populate( Class&amp; c )
+        static Populate( Class& c )
         {
             // AddField is a template function that will deduce
             //  everything but what the desired name is.
             Field* f = c.AddField( &amp;Object::m_Number, "Number" );
             // Its easy to imagine Field having extra information
             //  to inform all sorts of program behavior
-            //  f-&gt;SetRange( 0, 10 );
-            //  f-&gt;SetCategory( "Advanced Settings" );
+            //  f->SetRange( 0, 10 );
+            //  f->SetCategory( "Advanced Settings" );
         }
     };
 
     void main()
     {
-        Registry::RegisterClass( CreateClass&lt; Foo &gt;( "Foo" ) );
+        Registry::RegisterClass( CreateClass< Foo >( "Foo" ) );
 
         // program goes here
 
-    ￼    Registry::UnregisterClass( Registry::GetClass&lt; Foo &gt;() );
+    ￼    Registry::UnregisterClass( Registry::GetClass< Foo >() );
     }
 
 ## Conclusion
