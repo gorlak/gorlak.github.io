@@ -1,7 +1,7 @@
 ---
 layout: post
 category : articles
-tags : [code organiza]
+tags : [code organization]
 ---
 {% include JB/setup %}
 
