@@ -8,7 +8,7 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : "@gorlak's ramblings"
+title : "@gorlak's software ramblings"
 tagline: Busticating the codebase since 2001
 author :
   name : Geoff Evans
