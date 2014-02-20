@@ -4,7 +4,7 @@ layout: default
 {% include JB/setup %}
 
 <hr>
-Hi! I am Geoff Evans, programmer at large (mostly gamedev, and usually gamedev tools).  You can find me on [twitter](http://twitter.com/gorlak) and [github](http://github.com/gorlak).  Until then, feel free and read my latest post:
+Hi! I am Geoff Evans, software engineer at large (mostly gamedev, and usually tools).  I am known to do a bit of coding on [github](http://github.com/gorlak).  You can find personal ramblings at [flummoxed.org](http://flummoxed.org).
 <hr>
 
 <div class="blog-index">  
