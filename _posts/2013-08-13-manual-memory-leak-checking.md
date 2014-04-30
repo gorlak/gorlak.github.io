@@ -3,7 +3,7 @@ layout: post
 title: Manual Memory Leak Checking
 tagline: Using Visual Studio Debug CRT
 category : articles
-tags : [c++, memory leaksg]
+tags : [c++, memory leaks]
 ---
 {% include JB/setup %}
 
