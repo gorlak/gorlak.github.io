@@ -11,6 +11,7 @@ tags : []
 * This conference was inspired by Handmade con, borrowed the formula from them.  Mostly ad-hoc/interview style.
 * Video from Ted Price about stuff, sharing with the community.  Thanks for the conference, Ted!
 * Mike answering questions submitted by attendees.  Thoughts on small stuff.
+* All the videos will be posted online sometime after the conference wraps
 
 Insoniac Core Team structure:
 
@@ -102,8 +103,8 @@ Vitor Menezes, Evan Hatch, Dale Kim
 * Changes also live inside the memory of the server, Save is a feature of LunaServer, not the tools
 * MongoDB stores all the assets, overly tied to the way it wants assets formatted
 * LunaServer is coded with the formats that are relevant to the game, revising those formats need new build of LunaServer
-* If choosing to do things over again would not use a database for persistence of assets, keep in memory
-* Hooks for specific types of asset to invoke specific build steps and pass directly to the game
+* If choosing to do things over again would not use a database for persistence of local asset state, keep in memory
+* Hooks for specific types of asset to invoke specific build steps and pass directly to the game, a cheat on the original design
 
 ### 5:30pm Panel ###
 
@@ -124,8 +125,8 @@ How do we manage our streaming issues?
 Abdul B, Bob S, Jonathan A, Carl-Hendrik Skarstedt (Yacht Club Games), Chad Barb (Respawn Entertainment)
 
 * Defining the streaming problem
-* Player movingment impacts the requirements for streaming
-* Respawn mainly doing fixed size level and mip streaming, use HDD vs. optical
+* Player movement impacts the requirements for streaming
+* Chad: Respawn mainly doing fixed size level and mip streaming, use HDD vs. optical
 
 ### 11am Interview w/ Giac Veltri ###
 
@@ -134,7 +135,7 @@ Guest: Matt Sharpe (Harmonix)
 * Flash based node graph porting to native toolkit (Qt)
 * Flash had scaling issues, could take multiple minutes to load, native took it down to seconds
 * Matt: node based editors in Qt as well, for connecting events to the game (audio and visual effects) 
-* JavaScript in the browser pain points, difficult contortion to get performance (manual cloning of template objects on anim frames)
+* JavaScript in the browser pain points, difficult contortion to get performance (manual cloning of template objects on anim frames.. eh?)
 
 ### 11:30am Interview w/ Jonathan Adamczewski ###
 
@@ -150,7 +151,7 @@ What strategies do we use to approach debugging and profiling issues
 
 Jonathan G, Tony Arciuolo, Elan R, Jonathan A, Guest: Tony Albrect
 
-* Jonny: Macros that instrument the codebase for on-screen profiler, hooked into RAD's Telemetry
+* Jonny: Macros that instrument the codebase for on-screen profiler (standard stuff), hooked into RAD's Telemetry
 * Tony: Debug shader to draw skinned characters at bind pose in contrast color was very helpful in Sunset Overdrive
 * Elan, Jon A: WPA is a fantastic tool for getting a lot of profile data
 * Elan: Dota2? (referenced indirectly) has $500/microsecond of server CPU cost at scale
@@ -170,13 +171,14 @@ Jonathan G, Andreas F, Eric Li (Harmonix), Danielle Cerniglia (1st Playable Prod
 
 * Programmer iteration isn't frequently focus for compiler-writers, focus only on optimization
 * Don't hesitate to implement workflow that cut entire departments out of iteration, free up human cycles
+* Eric: Ended up making a simple indirection/automation solution for an audio staff member to experiment w/ design idea
 
 ### 3pm Interview w/ Tony Arciuolo ###
 
 Guest: Matt Pettineo (Ready at Dawn)
 
-* Matt: What are the changes necessary to go multi-platform?
-* Tony: Mostly software API issues and data organization issues to fulfill those APIs
+* Matt: Q: What are the changes necessary to go multi-platform?
+* Tony: A: Mostly software API issues and data organization issues to fulfill those APIs
 * Matt: Any way to tie a performance issue back to content is very beneficial (shaders)
 * Tony: A tricky issue is when env + lighting fight over who will benefit from complexity added to the scene, programmers arbitrate
 * Matt: Tends to be lighters we arbitrate against becuase they are more technical, make them pick their battles
@@ -188,7 +190,7 @@ How do we approach VR?
 
 Abdul B, Bob S, David Neubelt (Ready at Dawn)
 
-* 4-5m per viewport to draw the whole scene to keep framerate for VR
+* 4-5ms per viewport to draw the whole scene to keep framerate for VR
 * No motion blur, not god rays, etc... due to time
 * Draw good stuff, not more stuff
 
@@ -196,27 +198,27 @@ Abdul B, Bob S, David Neubelt (Ready at Dawn)
 
 Guest: Garret Foster (Ready at Dawn), Chris Butcher (Bungie)
 
-* Mike wants to talk about build systems
-* Chris: Need good solution for quickly sharing changes with neighbor devs
+* Mike wants to talk about build systems (woot!)
+* Chris: Need good solution for quickly sharing changes with neighbor devs (w/o submitting and syncing I think)
 * Garrett: Can't have multiple copies of the game on a hard drive, 2TB #head
 * Garrett: Custom p4 client views for different departments
 * Bob: Mongodb stores build metadata, moved into in-memory db (LMDB)
 * Bob: Cache was a side-project, scaled up out of side-project status, web-tech based cache didn't perform well (mongodb/web-req)
 * Chris: Build dependency graph is pretty arbitrary, no hard lines between assets, heavy interdependence
-* Chris: Constant buffers built for environment interdepend bi-directionally on the shaders used to draw them, heavy build cost
+* Chris: Constant buffers built for environment interdepend bi-directionally on the shaders used to draw them, heavy build cost (whaaaaa)
 * Chris: Requiring more dependencies between assets shouldn't necessarily be low in cost to prevent interdependence
 * Chris: A big regret is not seeing PC-centric content creation; would have made differenc choices since it has better random asset access
 * Bob, Garret: Pipeline has platform-independent step, then a platform-dependent step
 * Bob: Doubled up on processing identical data, took action to avoid it, but added on after the fact
-* Chris: Metadata for all the assets is several GB in and of itself
+* Chris: Metadata for all the assets is several GB in and of itself (!)
 * Chris: The cache is pretty monolithic, corresponds to a single changelist (stable builds are identified and encouraged to sync)
 * Chris: Unstable/bleeding edge builds are available but more costly to sync to because caching isn't complete
 * Garret: No toleration of missing assets, hard error; tolerating missing assets could lead to subtle bugs, skipped reporting tools to police
 * Garret: Building data in debug (w/ scribbling, init of memory pages) and in release and compare helps find determinism bugs
 * Garret: CI builds and populates the cache as changes commence
 * Garret, Bob: Peers/users do push data into the cache, problematic machines are found and fixed, breadcrumb left in the cache entry
-* Chris: Spatial relationships are important for caching, esp for caching baking problems (lighting)
-* Chris: Content creators always want shipping quality of the bakes
+* Chris: Consideration of spatial relationships are important for caching, esp for caching baking problems (lighting)
+* Chris: Content creators always want shipping quality of the bakes (of course they do)
 * Chris: Bias toward baking techniques toward cachable solutions (umbra)
 
 ### 5:30pm Panel ###
