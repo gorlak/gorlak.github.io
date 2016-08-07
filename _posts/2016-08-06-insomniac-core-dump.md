@@ -9,8 +9,8 @@ tags : []
 
 ### 10am Intro to Day 1 ###
 * This conference was inspired by Handmade con, borrowed the formula from them.  Mostly ad-hoc/interview style.
-* Video from Ted Price about stuff, sharing with the community and whatnot.
-* Mike answering questions submitted by attendees.  Rambling about his thoughts on small stuff.
+* Video from Ted Price about stuff, sharing with the community.  Thanks for the conference, Ted!
+* Mike answering questions submitted by attendees.  Thoughts on small stuff.
 
 Insoniac Core Team structure:
 
@@ -39,19 +39,17 @@ How does Insomniac manage build data?
 Andreas F, Bob Sprentall, Jonathan Adamczewski
 
 * Bob: The build aims it to be an invisible thing, no intervention
-* Bob: Each asset type has a builder tool, invoke that builder once to build all assets of that type
+* Bob: Each asset type has a builder tool (invoke that builder once to build all assets of that type? not sure)
 * Bob: Build system in front of builder, after the build runs once, no up front dependency registration
-* Bob: Worst case build with incremental build of changes due to dependency statting
 * Adam: Recast navigation is globally optimized by loading all data to analyze spatial proximity
-* Andreas: No file i/o in the game, only request load of asset-id, not file
-* Andreas: Ddependency graph of all the assets the engine has loaded -> key assets
-* Andreas: DG is stored off for disc mastering to know how to layout assets
-* Mike: Asset-id is a hash, they see collisions
-* Andreas: Don't use fios because DG loader has the info they need (serial loader working on known list)
-* Bob: You mention BC7 is slow: did you consider streaming uncompressed textures?
-* Mike: They use updater script to graduate/migrate source data to new schema
+* Andreas: No file i/o in the game, only request load of asset-id (probably from LunaServer), not file (a very good thing)
+* Andreas: Dependency graph of all the assets the engine has loaded -> key assets
+* Andreas: DG is stored off for disc mastering to know how to layout assets (archiver tool analyzes the data)
+* Mike: Asset-id is a hash, they see collisions semi-frequently
+* Andreas: Don't use fios because DG loader has the info they need (serial loader working on known list?)
+* Mike: They use updater script to graduate/migrate source data to new schema on demand, old data stays old in the repository (I think)
 * Adam: They do have a cache, doesn't sound content-hash addressable, fetches entries that might not be relevant (has deps inside it)
-* Andreas: Not sparse syncing, cordoning off departmental data, no task-specific condons yet
+* Andreas: No sparse syncing, cordoning off departmental data, no task-specific condons yet
 * Andreas: Feature development on the engine/tools take place on other branches
 * Bob: Branches are used to gate release to production
 
@@ -61,10 +59,10 @@ Reflections on >10 years at Insomniac
 
 Jonathan Garrett, Giac Veltri, Chris Edwards
 
-* Giac: Discrete asset types (mb, tb, lb) -> buildtool -> autobuild
+* Giac: Manual build discrete asset types (mb, tb, lb) -> evolve to unified buildtool w/ dependency graph
 * Jonny: Iteration time and 5s turnaround time, particles
-* Chris: Asset tagging issues, not stored inside the actual assets, have to migrate separately
-* Giac: Separate viewers for different asset types
+* Chris: Asset tagging issues, not stored inside the actual assets, have to migrate separately, a misstep
+* Giac: Separate viewers for different asset types, a mixed bag
 
 ### 2:00pm Interview w/ Dave Dimov ###
 
@@ -81,12 +79,13 @@ Lessons Joining the Insomniac Engine Team
 
 Vitor Menezes, Evan Hatch, Dale Kim
 
-* A bunch of junior engineers being bewildered by fancy things
+* A bunch of junior engineers being bewildered by fancy things (not my bag)
+* Some others had good takeaway, staff/senior team members at Insomniac especially
 
 ### 3pm Interview w/ Abdul Bezrati ###
 
 * Draw calls, batching, shader variation management 
-* Frame breakdown, deferred
+* Frame breakdown, deferred w/ forward pass
 
 ### 4:30pm Interview w/ Elan Ruskin ###
 
@@ -94,13 +93,13 @@ Vitor Menezes, Evan Hatch, Dale Kim
 * Callback to GDC talk about statistics
 * Physics and Havok rundown about how simulations don't necessarily make the best gameplay, how to compromise reality for each title
 * The whole studio is making a game, and entertainment product, don't lose sight of that
-* Use the tools is very instructive to improving them
+* Using the tools is very instructive to improving them
 
 ### 5:00pm Interview w/ Chris Edwards ###
 
-* LunaServer - hosts assets over an API, provides undo/redo
-* Takes incremental changes and generates a journal of recent changes on that machine
-* Changes live inside the memory of the server, Save is a feature of LunaServer, not the tools
+* LunaServer - hosts assets over an socket/web API, provides undo/redo to tools connected
+* Takes incremental changes and generates a journal of recent changes on that machine, written to db, then file
+* Changes also live inside the memory of the server, Save is a feature of LunaServer, not the tools
 * MongoDB stores all the assets, overly tied to the way it wants assets formatted
 * LunaServer is coded with the formats that are relevant to the game, revising those formats need new build of LunaServer
 * If choosing to do things over again would not use a database for persistence of assets, keep in memory
