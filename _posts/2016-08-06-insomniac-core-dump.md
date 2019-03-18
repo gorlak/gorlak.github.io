@@ -3,7 +3,7 @@ layout: post
 title: Insomniac Core Dump
 tagline: Notes From the Conference
 category : conferences
-tags : []
+tags : [insomniac]
 ---
 {% include JB/setup %}
 
