@@ -54,7 +54,7 @@ tags : [gdc]
 
 ---
 
-![inline](assets/shipping-features-pending-changelist.gif)
+![inline](/assets/shipping-features-pending-changelist.gif)
 
 ^ You may or may not have consciously chosen to be here
 
@@ -64,7 +64,7 @@ tags : [gdc]
 
 ---
 
-![inline](assets/shipping-features-stop-sign.jpg)
+![inline](/assets/shipping-features-stop-sign.jpg)
 
 ^ Stop right there, buddy.
 
