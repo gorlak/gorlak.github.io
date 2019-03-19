@@ -9,7 +9,7 @@ tags : [gdc]
 
 ---
 
-<h3><a href="assets/shipping-features.pdf">Here is the PDF of my deck from the talk!</a></h3>
+<h3><a href="/assets/shipping-features.pdf">Here is the PDF of my deck from the talk!</a></h3>
 
 ---
 
